@@ -14,4 +14,6 @@ def read_users():
   for user in data:
     new_users.append({"id": user["id"], "firstName": user["firstName"], "lastName":user["lastName"], "email": user["email"], "phone": user["phone"]})
 
-  return new_users
+  new_response = {"total":len(data), "count":len(new_users), "users": new_users} 
+
+  return new_response
