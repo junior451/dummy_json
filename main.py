@@ -7,5 +7,11 @@ app = FastAPI()
 def read_users():
   response = requests.get('https://dummyjson.com/users?limit=0')
   data = response.json()
+  data = data['users']
 
-  return data
+  new_users = []
+
+  for user in data:
+    new_users.append({"id": user["id"], "firstName": user["firstName"], "lastName":user["lastName"], "email": user["email"], "phone": user["phone"]})
+
+  return new_users
