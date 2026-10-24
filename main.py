@@ -10,7 +10,7 @@ try:
 
 except requests.exceptions.RequestException as e:
   print(f"Something went wrong: {e}")
-  data = []  # Fallback to an empty list if the request fails
+  data = []  # Fallback to a cached version or an empty list if the request fails
 
 @app.get("/users")
 def read_users(firstName: str = None, lastName: str = None):
