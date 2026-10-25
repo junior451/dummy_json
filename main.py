@@ -6,7 +6,7 @@ app = FastAPI()
 try:
   response = requests.get('https://dummyjson.com/users?limit=0', timeout=5)
   response.raise_for_status()  # Raise an error for bad responses
-  data = response.json()['users'] #get users key from the dict object
+  data = response.json()['users']
 
 except requests.exceptions.RequestException as e:
   print(f"Something went wrong: {e}")
@@ -14,15 +14,15 @@ except requests.exceptions.RequestException as e:
 
 @app.get("/users")
 def read_users(firstName: str = None, lastName: str = None):
-  new_users = []
+  filtered_users = []
 
   for user in data:
     if firstName and user["firstName"].lower() != firstName.lower():
       continue
     if lastName and user["lastName"].lower() != lastName.lower():
       continue
-    new_users.append({"id": user["id"], "firstName": user["firstName"], "lastName":user["lastName"], "email": user["email"], "phone": user["phone"]})
+    filtered_users.append({"id": user["id"], "firstName": user["firstName"], "lastName":user["lastName"], "email": user["email"], "phone": user["phone"]})
 
-  new_response = {"total":len(data), "count":len(new_users), "users": new_users} 
+  new_response = {"total":len(data), "count":len(filtered_users), "users": filtered_users} 
 
   return new_response
